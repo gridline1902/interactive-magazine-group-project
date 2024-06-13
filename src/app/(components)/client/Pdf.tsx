@@ -1,6 +1,7 @@
 'use client';
 
-import { Fade } from 'react-awesome-reveal';
+import React, { useState } from 'react';
+import HTMLFlipBook from 'react-pageflip';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
@@ -15,14 +16,56 @@ interface PdfDocumentOptions {
     onDocumentLoadSuccess: (numPages: number) => void;
 }
 
+export default function Pdf() {
+    const [numPages, setNumPages] = useState<number>(null);
 
-export default function Pdf({ pageNumber = 1, onDocumentLoadSuccess }: Readonly<PdfDocumentOptions>) {
+    const onDocumentLoadSuccessInternal = ({ numPages }: { numPages: number }) => {
+        setNumPages(numPages);
+    };
+
     return (
-        <Document file="./travel-magazine.pdf" onLoadSuccess={({ numPages }) => onDocumentLoadSuccess(numPages)}>
-            <Fade cascade={true} damping={0.1} direction='right'>
-                <Page pageNumber={pageNumber} loading="Loading...." />
-            </Fade>
-        </Document>
-
+        <div className="flex justify-center items-center h-screen">
+            <Document
+                file="./travel-magazine.pdf"
+                onLoadSuccess={onDocumentLoadSuccessInternal}
+                className="flex justify-center items-center"
+            >
+                <HTMLFlipBook
+                    width={300}
+                    height={500}
+                    className="shadow-lg"
+                    style={{}}
+                    startPage={0}
+                    size="fixed"
+                    minWidth={0}
+                    maxWidth={0}
+                    minHeight={0}
+                    maxHeight={0}
+                    drawShadow={true}
+                    flippingTime={1}
+                    usePortrait={false}
+                    startZIndex={0}
+                    autoSize={false}
+                    maxShadowOpacity={1}
+                    showCover={false}
+                    mobileScrollSupport={false}
+                    clickEventForward={false}
+                    useMouseEvents={true}
+                    swipeDistance={0}
+                    showPageCorners={true}
+                    disableFlipByClick={false}
+                >
+                    {numPages &&
+                        Array.from(new Array(numPages), (el, index) => (
+                            <div key={`page_${index + 1}`}>
+                                <Page
+                                    pageNumber={index + 1}
+                                    width={300}
+                                />
+                            </div>
+                        ))}
+                </HTMLFlipBook>
+            </Document>
+        </div>
     );
 }
