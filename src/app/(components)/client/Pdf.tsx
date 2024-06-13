@@ -17,7 +17,7 @@ interface PdfDocumentOptions {
 }
 
 export default function Pdf() {
-    const [numPages, setNumPages] = useState<number>(null);
+    const [numPages, setNumPages] = useState<number>(1);
 
     const onDocumentLoadSuccessInternal = ({ numPages }: { numPages: number }) => {
         setNumPages(numPages);
@@ -55,7 +55,7 @@ export default function Pdf() {
                     showPageCorners={true}
                     disableFlipByClick={false}
                 >
-                    {numPages &&
+                    {numPages >= 0 &&
                         Array.from(new Array(numPages), (el, index) => (
                             <div key={`page_${index + 1}`}>
                                 <Page
