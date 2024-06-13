@@ -1,5 +1,6 @@
 'use client';
 
+import { Fade } from 'react-awesome-reveal';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
@@ -18,7 +19,10 @@ interface PdfDocumentOptions {
 export default function Pdf({ pageNumber = 1, onDocumentLoadSuccess }: Readonly<PdfDocumentOptions>) {
     return (
         <Document file="./travel-magazine.pdf" onLoadSuccess={({ numPages }) => onDocumentLoadSuccess(numPages)}>
-            <Page pageNumber={pageNumber} />
+            <Fade cascade={true} damping={0.1} direction='right'>
+                <Page pageNumber={pageNumber} loading="Loading...." />
+            </Fade>
         </Document>
+
     );
 }

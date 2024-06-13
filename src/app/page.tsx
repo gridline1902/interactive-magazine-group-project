@@ -30,13 +30,15 @@ export default function Home() {
 
   return (
     <main className="w-full flex justify-center bg-white">
-      <Button className="bg-black px-4" onButtonClick={onPrevClick} hidden={pageNumber <= 1}>
-        <MdNavigateBefore className='text-slate-50' />
-      </Button>
-      <Pdf pageNumber={pageNumber} onDocumentLoadSuccess={onDocumentLoadSuccess} />
-      <Button onButtonClick={onNextClick} hidden={pageNumber >= numPages}>
-        <MdNavigateNext className='text-slate-950' />
-      </Button>
+      <div className="flex scale-50">
+        <Button className="bg-black px-4" onButtonClick={onPrevClick} hidden={pageNumber <= 1}>
+          <MdNavigateBefore className='text-slate-50 size-16' />
+        </Button>
+        <Pdf pageNumber={pageNumber} onDocumentLoadSuccess={onDocumentLoadSuccess} />
+        <Button onButtonClick={onNextClick} hidden={pageNumber >= numPages}>
+          <MdNavigateNext className='text-slate-950 size-16' />
+        </Button>
+      </div>
     </main>
   );
 }
