@@ -10,7 +10,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-export default function Pdf() {
+const Pdf = () => {
     const [numPages, setNumPages] = useState<number>(1);
 
     const onDocumentLoadSuccessInternal = ({ numPages }: { numPages: number }) => {
@@ -63,3 +63,5 @@ export default function Pdf() {
         </div>
     );
 }
+
+export default Pdf;
