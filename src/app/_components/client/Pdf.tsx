@@ -8,8 +8,8 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
+    'pdfjs-dist/build/pdf.worker.min.mjs',
+    import.meta.url,
 ).toString();
 
 
@@ -25,18 +25,33 @@ const options = {
 type PDFFile = string | File | null;
 
 const Pdf = () => {
-    const [file] = useState<PDFFile>('./travel-magazine.pdf');
+    const [file, setFile] = useState<PDFFile>('./travel-magazine.pdf');
     const [numPages, setNumPages] = useState<number>(1);
 
-    const onDocumentLoadSuccessInternal = ({ numPages }: PDFDocumentProxy) => {
-        setNumPages(numPages);
-    };
+    function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
+        const { files } = event.target;
+
+        const nextFile = files?.[0];
+
+        if (nextFile) {
+            setFile(nextFile);
+        }
+    }
+
+    function onDocumentLoadSuccess({ numPages: nextNumPages }: PDFDocumentProxy): void {
+        setNumPages(nextNumPages);
+    }
+
 
     return (
         <div className="flex justify-center items-center h-screen">
+            <div className="mb-24">
+                <label htmlFor="file">Load from file:</label>{' '}
+                <input onChange={onFileChange} type="file" />
+            </div>
             <Document
                 file={file}
-                onLoadSuccess={onDocumentLoadSuccessInternal}
+                onLoadSuccess={onDocumentLoadSuccess}
                 className="flex justify-center items-center"
                 options={options}
             >
