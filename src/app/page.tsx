@@ -1,4 +1,3 @@
-// import Pdf from './(components)/client/Pdf';
 import dynamic from 'next/dynamic';
 
 const Pdf = dynamic(() => import("./_components/client/Pdf"), {

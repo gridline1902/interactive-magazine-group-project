@@ -1,25 +1,31 @@
 'use client';
-import React, { useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
-import HTMLFlipBook from 'react-pageflip';
+
+import { useState } from "react";
+import { pdfjs, Document, Page } from 'react-pdf';
+import HTMLFlipBook from "react-pageflip";
 import type { PDFDocumentProxy } from 'pdfjs-dist';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   'pdfjs-dist/build/pdf.worker.min.js',
-//   import.meta.url,
-// ).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 
 
-// import * as PDFJS from 'pdfjs-dist/build/pdf.mjs';
-// const workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS.version}/pdf.worker.min.js`;
-// PDFJS.GlobalWorkerOptions.workerSrc = workerSrc;
 
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//     'pdfjs-dist/build/pdf.worker.min.mjs',
-//     import.meta.url,
-//   ).toString();
+
+const options = {
+    cMapUrl: '/cmaps/',
+    standardFontDataUrl: '/standard_fonts/',
+    cMapPacked: true
+};
+
+
+type PDFFile = string | File | null;
 
 const Pdf = () => {
+    const [file] = useState<PDFFile>('./travel-magazine.pdf');
     const [numPages, setNumPages] = useState<number>(1);
 
     const onDocumentLoadSuccessInternal = ({ numPages }: PDFDocumentProxy) => {
@@ -29,9 +35,10 @@ const Pdf = () => {
     return (
         <div className="flex justify-center items-center h-screen">
             <Document
-                file="/travel-magazine.pdf"
+                file={file}
                 onLoadSuccess={onDocumentLoadSuccessInternal}
                 className="flex justify-center items-center"
+                options={options}
             >
                 <HTMLFlipBook
                     width={300}
