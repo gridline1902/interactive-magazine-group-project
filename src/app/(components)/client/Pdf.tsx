@@ -1,8 +1,11 @@
 'use client';
 import { Document, Page, pdfjs } from 'react-pdf';
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-import React, { useState } from 'react';
+import { useState } from 'react';
 import HTMLFlipBook from 'react-pageflip';
+
+// Use CDN for pdf.worker.js
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
 
 const Pdf = () => {
     const [numPages, setNumPages] = useState<number>(1);
@@ -14,7 +17,7 @@ const Pdf = () => {
     return (
         <div className="flex justify-center items-center h-screen">
             <Document
-                file="./travel-magazine.pdf"
+                file="/travel-magazine.pdf"
                 onLoadSuccess={onDocumentLoadSuccessInternal}
                 className="flex justify-center items-center"
             >
