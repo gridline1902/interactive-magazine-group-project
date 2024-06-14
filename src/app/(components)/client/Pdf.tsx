@@ -2,19 +2,13 @@
 
 import React, { useState } from 'react';
 import HTMLFlipBook from 'react-pageflip';
-import { pdfjs, Document, Page } from 'react-pdf';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
-
+import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.mjs',
     import.meta.url,
 ).toString();
-
-interface PdfDocumentOptions {
-    pageNumber?: number;
-    onDocumentLoadSuccess: (numPages: number) => void;
-}
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 export default function Pdf() {
     const [numPages, setNumPages] = useState<number>(1);
