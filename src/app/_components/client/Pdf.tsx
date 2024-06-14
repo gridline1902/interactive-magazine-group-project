@@ -1,16 +1,28 @@
 'use client';
+import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { useState } from 'react';
 import HTMLFlipBook from 'react-pageflip';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 
-// Use CDN for pdf.worker.js
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   'pdfjs-dist/build/pdf.worker.min.js',
+//   import.meta.url,
+// ).toString();
 
+
+// import * as PDFJS from 'pdfjs-dist/build/pdf.mjs';
+// const workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS.version}/pdf.worker.min.js`;
+// PDFJS.GlobalWorkerOptions.workerSrc = workerSrc;
+
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//     'pdfjs-dist/build/pdf.worker.min.mjs',
+//     import.meta.url,
+//   ).toString();
 
 const Pdf = () => {
     const [numPages, setNumPages] = useState<number>(1);
 
-    const onDocumentLoadSuccessInternal = ({ numPages }: { numPages: number }) => {
+    const onDocumentLoadSuccessInternal = ({ numPages }: PDFDocumentProxy) => {
         setNumPages(numPages);
     };
 
