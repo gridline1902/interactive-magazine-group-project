@@ -18,6 +18,7 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 type PDFFile = string | File | null;
 
 const Pdf = () => {
+    const [pdfFilePath] = useState<PDFFile>('/magazine.pdf');
     const [numPages, setNumPages] = useState<number>(0);
     function onDocumentLoadSuccess({ numPages: nextNumPages }: PDFDocumentProxy): void {
         setNumPages(nextNumPages);
@@ -26,7 +27,7 @@ const Pdf = () => {
     return (
         <div className="flex justify-center items-center h-screen">
             <Document
-                file={"./travel-magazine.pdf"}
+                file={pdfFilePath}
                 className="flex justify-center items-center"
                 onLoadSuccess={onDocumentLoadSuccess}
             >
