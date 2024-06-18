@@ -1,3 +1,5 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 
 const Pdf = dynamic(() => import("./_components/client/Pdf"), {
@@ -6,8 +8,6 @@ const Pdf = dynamic(() => import("./_components/client/Pdf"), {
 
 
 export default function App() {
-
-
   return (
 
     <main className="h-screen bg-white">
