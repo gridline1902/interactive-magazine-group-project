@@ -1,11 +1,11 @@
 'use client';
-
 import { useState } from "react";
+
+
 import { pdfjs, Document, Page } from 'react-pdf';
-import HTMLFlipBook from "react-pageflip";
-import type { PDFDocumentProxy } from 'pdfjs-dist';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+import HTMLFlipBook from "react-pageflip";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -13,47 +13,22 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 
-
-
-const options = {
-    cMapUrl: '/cmaps/',
-    standardFontDataUrl: '/standard_fonts/',
-    cMapPacked: true
-};
-
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 type PDFFile = string | File | null;
 
 const Pdf = () => {
-    const [file, setFile] = useState<PDFFile>('./travel-magazine.pdf');
-    const [numPages, setNumPages] = useState<number>(1);
-
-    function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
-        const { files } = event.target;
-
-        const nextFile = files?.[0];
-
-        if (nextFile) {
-            setFile(nextFile);
-        }
-    }
-
+    const [numPages, setNumPages] = useState<number>(0);
     function onDocumentLoadSuccess({ numPages: nextNumPages }: PDFDocumentProxy): void {
         setNumPages(nextNumPages);
     }
 
-
     return (
         <div className="flex justify-center items-center h-screen">
-            <div className="mb-24">
-                <label htmlFor="file">Load from file:</label>{' '}
-                <input onChange={onFileChange} type="file" />
-            </div>
             <Document
-                file={file}
-                onLoadSuccess={onDocumentLoadSuccess}
+                file={"./travel-magazine.pdf"}
                 className="flex justify-center items-center"
-                options={options}
+                onLoadSuccess={onDocumentLoadSuccess}
             >
                 <HTMLFlipBook
                     width={300}

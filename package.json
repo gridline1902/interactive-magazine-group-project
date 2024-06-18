@@ -29,9 +29,5 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
-  },
-  "resolutions": {
-    "react-pdf/**/canvas": "link:./node_modules/.cache/null",
-    "pdfjs-dist/canvas": "link:./node_modules/.cache/null"
   }
 }
